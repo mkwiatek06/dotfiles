@@ -1,0 +1,2 @@
+nvim/.config/nvim/queries/*
+!nvim/.config/nvim/queries/QUERIES.md
