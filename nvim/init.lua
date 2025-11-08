@@ -13,14 +13,15 @@ vim.keymap.set('n', '<leader><Tab>',
 vim.keymap.set('n', '<leader><S-Tab>',
 	'<cmd>tabprevious<CR>', { desc = "Previous window" })
 vim.keymap.set('n', '<leader>tc', '<cmd>$tabnew<CR>', { desc = "Tab Create" })
-
-if vim.fn.has("unix") then
-	OS = "unix"
-elseif vim.fn.has("win32") then
-	OS = "win32"
-end
+vim.keymap.set('n', '_', "<cmd>vertical resize -2<CR>", { desc = "V Resize -" })
+vim.keymap.set('n', '+', "<cmd>vertical resize +2<CR>", { desc = "V Resize +" })
+vim.keymap.set('n', '-', "<cmd>horizontal resize -2<CR>", { desc = "H Resize -" })
+vim.keymap.set('n', '=', "<cmd>horizontal resize +2<CR>", { desc = "H Resize +" })
 
 -- ==> Options :3 <==
+-- User plugin options
+CompilerWinSize = 15
+
 -- Something Wild
 vim.o.wildmode = longest, list
 vim.o.wildoptions = fuzzy
@@ -82,24 +83,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 	end
 })
 
--- Auto close netrw and diagnostics windows when quitting the last "real" buffer [AI :3]
+-- Auto close auxiliary windows when quitting the last main buffer
 vim.api.nvim_create_autocmd("QuitPre", {
 	callback = function()
-		local invalid_win = {}
 		for _, win in ipairs(vim.api.nvim_list_wins()) do
 			local buf = vim.api.nvim_win_get_buf(win)
-			-- local bt = vim.api.nvim_get_option_value("buftype", { buf = buf })
 			local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
 
-			-- mark netrw or diagnostic windows for closing
 			if ft == "netrw" or ft == "qf" then
-				table.insert(invalid_win, win)
-			end
-		end
-
-		-- if we’re about to quit and only these remain, close them
-		if #invalid_win == #vim.api.nvim_list_wins() - 1 then
-			for _, win in ipairs(invalid_win) do
 				vim.api.nvim_win_close(win, true)
 			end
 		end
@@ -120,9 +111,7 @@ require('ide-interface')
 require('clipboawd')
 require('netrw')
 require('fzf')
-if OS == "unix" then
-	require('compile-ng')
-end
+require('compile')
 -- require('commands')
 require('indents')
 require('startup')
