@@ -1,3 +1,4 @@
+-- Meow :3
 -- ==> Keybinds :3 <==
 vim.g.mapleader = " " -- Leader (mapped to space) [keep before bindings req. Leader]
 vim.keymap.set('n', '<leader>m', '<cmd>echo "meow"<CR>', { desc = 'Meow :3' })
