@@ -1,6 +1,7 @@
--- Meow :3
--- ==> Keybinds :3 <==
 vim.g.mapleader = " " -- Leader (mapped to space) [keep before bindings req. Leader]
+require('shared')
+
+-- ==> Keybinds :3 <==
 vim.keymap.set('n', '<leader>m', '<cmd>echo "meow"<CR>', { desc = 'Meow :3' })
 vim.keymap.set('n', '<leader>rr', '<cmd>redo<CR>', { desc = 'Redo' })
 vim.keymap.set('n', '<leader>rc',
@@ -103,6 +104,7 @@ vim.cmd('packadd! nohlsearch') -- conditionally turn off search highlighting
 
 -- ==> External files :3 <==
 require('colors')
+require('colorpicker')
 require('lsp')
 require('statusline')
 -- require('tabline')

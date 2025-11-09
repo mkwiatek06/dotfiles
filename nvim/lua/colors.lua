@@ -13,5 +13,7 @@ vim.cmd[[highlight DiagnosticUnderlineHint guisp=#5f5f87]]
 vim.cmd[[highlight CurSearch guibg=#5500ff guifg=#000000]]
 vim.cmd[[highlight Search guibg=#8144fc guifg=#000000]]
 
+-- vim.api.nvim_set_hl(0, 'NonText', { fg = '#000000', bg = '#000000', bold = true })
+-- vim.api.nvim_set_hl(0, 'Normal', { fg = '#FFFFFF', bg = '#000000', bold = true })
 vim.api.nvim_set_hl(0, 'SLIndentLinux', { fg = '#002B6C', bg = '#FFFFFF', bold = true })
 vim.api.nvim_set_hl(0, 'Separator', { fg = '#002B6C', bg = '#002B6C' })

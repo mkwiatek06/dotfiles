@@ -1,24 +1,9 @@
 -- Netrw
-function ToggleNetrw()
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-        local buf = vim.api.nvim_win_get_buf(win)
-        local cur_ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
-
-        if vim.api.nvim_buf_is_valid(buf) and vim.b[buf].is_fzf then
-            vim.api.nvim_win_close(win, true)
-        end
-
-        -- If netrw is already open, close it (by default doesn't work with below config)
-        if cur_ft == "netrw" then
-            vim.api.nvim_win_close(win, true)
-            return
-        end
-    end
-    vim.cmd('Lexplore %:p:h')
-end
-
 vim.keymap.set('n', '<leader>ee', function()
-    ToggleNetrw()
+	if not CloseWindow("Netrw") then
+		vim.cmd('Lexplore %:p:h')
+		vim.cmd("file Netrw")
+	end
 end, { desc = "Open netrw" })
 
 vim.g.netrw_liststyle = 3
@@ -33,7 +18,7 @@ vim.g.netrw_preview = 1 -- Preview files with 'p'
 vim.g.netrw_sort_sequence = [[[\/]$,*]]
 vim.g.netrw_sizestyle = "H"
 
-if IsUnix == true then -- only on *nix systems
+if OS == "Linux" or OS == "Darwin" or OS == "FreeBSD" then -- only on *nix systems
     vim.g.netrw_localcopydircmd = "cp -r"
     vim.g.netrw_localmkdir = "mkdir -p"
     vim.g.netrw_localrmdir = "rm -r"

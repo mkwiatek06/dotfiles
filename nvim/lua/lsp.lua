@@ -19,18 +19,10 @@ for _, server in ipairs(servers) do
 end
 
 function ToggleLoclist()
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-        local buf = vim.api.nvim_win_get_buf(win)
-        local cur_ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
-
-        -- If a location list is already open, close it (by default only works when focused)
-        if cur_ft == "qf" then
-            vim.api.nvim_win_close(win, true)
-            return
-        end
-    end
-    -- Otherwise, open diagnostics in a location list
-    vim.diagnostic.setloclist()
+	if not CloseWindow("DiagnosticsList") then
+		vim.diagnostic.setloclist()
+		vim.cmd("file DiagnosticsList")
+	end
 end
 
 vim.api.nvim_create_autocmd('LspAttach', {
