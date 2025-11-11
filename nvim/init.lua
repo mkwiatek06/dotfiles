@@ -24,9 +24,10 @@ vim.keymap.set('n', '=', "<cmd>horizontal resize +2<CR>", { desc = "H Resize +" 
 -- User plugin options
 CompilerWinSize = 15
 
--- Something Wild
-vim.o.wildmode = longest, list
-vim.o.wildoptions = fuzzy
+-- Something Wild (vim command line autocomplete)
+vim.o.wildmode = "full"
+vim.o.wildoptions = "fuzzy,pum"
+vim.o.pumheight = 10
 
 -- IDE UI
 vim.opt.number = true -- Line numbers
@@ -78,27 +79,13 @@ vim.opt.guicursor = {
 
 -- ==> Autocommands :3 <==
 -- Highlight when yanking (copying) text.
-vim.api.nvim_create_autocmd('TextYankPost', {
-	desc = 'Highlight when yanking (copying) text',
-	callback = function()
-		vim.hl.on_yank()
-	end
-})
-
--- Auto close auxiliary windows when quitting the last main buffer
-vim.api.nvim_create_autocmd("QuitPre", {
-	callback = function()
-		for _, win in ipairs(vim.api.nvim_list_wins()) do
-			local buf = vim.api.nvim_win_get_buf(win)
-			local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
-
-			if ft == "netrw" or ft == "qf" then
-				vim.api.nvim_win_close(win, true)
-			end
-		end
-end,
-})
-
+-- vim.api.nvim_create_autocmd('TextYankPost', {
+-- 	desc = 'Highlight when yanking (copying) text',
+-- 	callback = function()
+-- 		vim.hl.on_yank()
+-- 	end
+-- })
+--
 -- ==> Built-in external packages :3 <==
 vim.cmd('packadd! nohlsearch') -- conditionally turn off search highlighting
 
