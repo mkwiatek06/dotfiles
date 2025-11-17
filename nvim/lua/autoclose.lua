@@ -1,57 +1,65 @@
 -- Automatic closing of {}, (), [], '', and "" :3
 
 -- Standard closing
-vim.cmd[[inoremap { {}<Left>]]
-vim.cmd[[inoremap ( ()<Left>]]
-vim.cmd[[inoremap [ []<Left>]]
-vim.cmd[[inoremap ' ''<Left>]]
-vim.cmd[[inoremap " ""<Left>]]
+vim.keymap.set("i", "{", "{}<Left>")
+vim.keymap.set("i", "(", "()<Left>")
+vim.keymap.set("i", "[", "[]<Left>")
+vim.keymap.set("i", "'", "''<Left>")
+vim.keymap.set("i", '"', '""<Left>')
 
 -- Multi-line closing
-vim.cmd[[inoremap {<cr> {<cr>}<C-O><S-O>]]
-vim.cmd[[inoremap (<cr> (<cr>)<c-o><s-o>]]
-vim.cmd[[inoremap [<cr> [<cr>]<c-o><s-o><tab>]]
-vim.cmd[[inoremap '<cr> '<cr>'<c-o><s-o><tab>]]
-vim.cmd[[inoremap "<cr> "<cr>"<c-o><s-o><tab>]]
+-- vim.keymap.set("i", "{<cr>", "{<cr>}<C-O><S-O><tab>")
+-- vim.keymap.set("i", "(<cr>", "(<cr>)<c-o><s-o><tab>")
+-- vim.keymap.set("i", "[<cr>", "[<cr>]<c-o><s-o><tab>")
+-- vim.keymap.set("i", "'<cr>", "'<cr>'<c-o><s-o><tab>")
+-- vim.keymap.set("i", '"<cr>', '"<cr>"<c-o><s-o><tab>')
+
+-- Multi-line closing
+vim.keymap.set("i", "{<cr>", "{<cr>}<C-O><S-O>")
+vim.keymap.set("i", "(<cr>", "(<cr>)<c-o><s-o>")
+vim.keymap.set("i", "[<cr>", "[<cr>]<c-o><s-o>")
+vim.keymap.set("i", "'<cr>", "'<cr>'<c-o><s-o>")
+vim.keymap.set("i", '"<cr>', '"<cr>"<c-o><s-o>')
+
 
 -- Backspace behavior
-vim.cmd[[inoremap {<backspace> <Nop>]]
-vim.cmd[[inoremap (<backspace> <Nop>]]
-vim.cmd[[inoremap [<backspace> <Nop>]]
-vim.cmd[[inoremap '<backspace> <Nop>]]
-vim.cmd[[inoremap "<backspace> <Nop>]]
+vim.keymap.set("i", "{<backspace>", "<Nop>")
+vim.keymap.set("i", "(<backspace>", "<Nop>")
+vim.keymap.set("i", "[<backspace>", "<Nop>")
+vim.keymap.set("i", "'<backspace>", "<Nop>")
+vim.keymap.set("i", '"<backspace>', "<Nop>")
 
--- Weird right-to-left thing
--- vim.cmd[[inoremap <expr> ) strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"]]
--- vim.cmd[[inoremap <expr> } strpart(getline('.'), col('.')-1, 1) == "}" ? "\<Right>" : "}"]]
--- vim.cmd[[inoremap <expr> ] strpart(getline('.'), col('.')-1, 1) == "]" ? "\<Right>" : "]"]]
--- vim.cmd[[inoremap <expr> ' strpart(getline('.'), col('.')-1, 1) == "'" ? "\<Right>" : "''<left>"]]
--- vim.cmd[[inoremap <expr> " strpart(getline('.'), col('.')-1, 1) == "\"" ? "\<Right>" : "\"\"<left>"]]
+-- Allow self-closing
+vim.keymap.set("i", "{}", "{}")
+vim.keymap.set("i", "()", "()")
+vim.keymap.set("i", "[]", "[]")
+vim.keymap.set("i", "''", "''")
+vim.keymap.set("i", '""', '""')
 
 -- Skip closing on Escape
-vim.cmd[[inoremap {<Esc> {]]
-vim.cmd[[inoremap (<Esc> (]]
-vim.cmd[[inoremap [<Esc> []]
-vim.cmd[[inoremap '<Esc> ']]
-vim.cmd[[inoremap "<Esc> "]]
+vim.keymap.set("i", "{<Esc>", "{")
+vim.keymap.set("i", "(<Esc>", "(")
+vim.keymap.set("i", "[<Esc>", "[")
+vim.keymap.set("i", "'<Esc>", "'")
+vim.keymap.set("i", '"<Esc>', '"')
 
--- Center space
-vim.cmd[[inoremap {<space> {<space><space>}<left><left>]]
-vim.cmd[[inoremap (<space> (<space><space>)<left><left>]]
-vim.cmd[[inoremap [<space> [<space><space>]<left><left>]]
--- vim.cmd[[inoremap '<space> '<space><space>'<left><left>]]
--- vim.cmd[[inoremap "<space> "<space><space>"<left><left>]]
+-- Center space (optional for '  ' and "  ")
+vim.keymap.set("i", "{<space>", "{<space><space>}<left><left>")
+vim.keymap.set("i", "(<space>", "(<space><space>)<left><left>")
+vim.keymap.set("i", "[<space>", "[<space><space>]<left><left>")
+-- vim.keymap.set("i", "'<space>", "'<space><space>'<left><left>")
+-- vim.keymap.set("i", '"<space>', '"<space><space>"<left><left>')
 
 -- Normal mode closing
-vim.cmd[[nnoremap ' mmbi'<esc>ea'<esc>`m<right>]]
-vim.cmd[[nnoremap " mmbi"<esc>ea"<esc>`m<right>]]
-vim.cmd[[nnoremap ( mmbi(<esc>ea)<esc>`m<right>]]
-vim.cmd[[nnoremap { mmbi{<esc>ea}<esc>`m<right>]]
-vim.cmd[[nnoremap [ mmbi[<esc>ea]<esc>`m<right>]]
+vim.keymap.set("n", "(", "mmbi(<esc>ea)<esc>`m<right>")
+vim.keymap.set("n", "{", "mmbi{<esc>ea}<esc>`m<right>")
+vim.keymap.set("n", "[[", "mmbi[<esc>ea]<esc>`m<right>")
+vim.keymap.set("n", "'", "mmbi'<esc>ea'<esc>`m<right>")
+vim.keymap.set("n", '"', 'mmbi"<esc>ea"<esc>`m<right>')
 
 -- Visual mode closing
-vim.cmd[[vnoremap ' <Esc>`<i'<Esc>`>a<right>'<Esc>]]
-vim.cmd[[vnoremap " <Esc>`<i"<Esc>`>a<right>"<Esc>]]
-vim.cmd[[vnoremap ( <Esc>`<i(<Esc>`>a<right>)<Esc>]]
-vim.cmd[[vnoremap { <Esc>`<i{<Esc>`>a<right>}<Esc>]]
-vim.cmd[[vnoremap [ <Esc>`<i[<Esc>`>a<right>]<Esc>]]
+vim.keymap.set("v", "(", "<Esc>`<i(<Esc>`>a<right>)<Esc>")
+vim.keymap.set("v", "{", "<Esc>`<i{<Esc>`>a<right>}<Esc>")
+vim.keymap.set("v", "[[", "<Esc>`<i[<Esc>`>a<right>]<Esc>")
+vim.keymap.set("v", "'", "<Esc>`<i'<Esc>`>a<right>'<Esc>")
+vim.keymap.set("v", '"', '<Esc>`<i"<Esc>`>a<right>"<Esc>')

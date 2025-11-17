@@ -29,7 +29,7 @@ end
 
 -- Auto close auxiliary windows when quitting the last main buffer
 vim.api.nvim_create_autocmd("QuitPre", { callback = function()
-	local aux_titles = { "Netrw", "DiagnosticsList", "ColorInfo" }
+	local aux_titles = { "Netrw", "DiagnosticsList", "ColorInfo", "Diff" }
 	CloseWindows(aux_titles)
 end,
 })

@@ -15,6 +15,9 @@ vim.keymap.set('n', '<leader><Tab>',
 vim.keymap.set('n', '<leader><S-Tab>',
 	'<cmd>tabprevious<CR>', { desc = "Previous window" })
 vim.keymap.set('n', '<leader>tc', '<cmd>$tabnew<CR>', { desc = "Tab Create" })
+
+vim.keymap.set('x', 'p', [["_dP]]) -- don't re-yank when replacing in visual mode
+
 vim.keymap.set('n', '_', "<cmd>vertical resize -2<CR>", { desc = "V Resize -" })
 vim.keymap.set('n', '+', "<cmd>vertical resize +2<CR>", { desc = "V Resize +" })
 vim.keymap.set('n', '-', "<cmd>horizontal resize -2<CR>", { desc = "H Resize -" })
@@ -31,7 +34,7 @@ vim.o.pumheight = 10
 
 -- IDE UI
 vim.opt.number = true -- Line numbers
-vim.opt.relativenumber = false -- ^ Relative to current line
+vim.opt.relativenumber = true -- ^ Relative to current line
 vim.opt.cursorline = true -- Highlight line the cursor is on
 vim.opt.termguicolors = true -- Better colors
 vim.opt.fillchars = { eob = ' ' } -- end-of-buffer character
@@ -79,13 +82,13 @@ vim.opt.guicursor = {
 
 -- ==> Autocommands :3 <==
 -- Highlight when yanking (copying) text.
--- vim.api.nvim_create_autocmd('TextYankPost', {
--- 	desc = 'Highlight when yanking (copying) text',
--- 	callback = function()
--- 		vim.hl.on_yank()
--- 	end
--- })
---
+vim.api.nvim_create_autocmd('TextYankPost', {
+	desc = 'Highlight when yanking (copying) text',
+	callback = function()
+		vim.hl.on_yank()
+	end
+})
+
 -- ==> Built-in external packages :3 <==
 vim.cmd('packadd! nohlsearch') -- conditionally turn off search highlighting
 
@@ -105,3 +108,4 @@ require('compile')
 -- require('commands')
 require('indents')
 require('startup')
+require('diff')

@@ -1,5 +1,5 @@
 local function startScreen()
-	local header = {
+	local splash = {
 		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
 		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠛⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
 		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠛⢠⡀⠸⣆⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
@@ -23,27 +23,33 @@ local function startScreen()
 		'                                                         ',
 		'                       q >>> exit                        ',
 		'                   e >>> file finder                     ',
-		'                      : >>> command                      ',
-		'                      n >>> new file                     ',
+		'                     : >>> command                       ',
+		'                  <TAB> >>> new file                     ',
 	}
 
+	local reduced_splash = {
+		'                 Hai! Welcome to Neovim!!! █             ',
+		'                                                         ',
+		'                       q >>> exit                        ',
+		'                   e >>> file finder                     ',
+		'                     : >>> command                       ',
+		'                  <TAB> >>> new file                     ',
+	}
+
+	if (vim.o.lines > #splash + 1) then
+		CursorLine = 20
+		Splash = splash
+	else
+		CursorLine = 1
+		Splash = reduced_splash
+	end
+
 	local width = 57
-	local height = #header
-	local row = math.floor((vim.o.lines - height) / 2)
+	local height = #Splash
+
+	-- center window; compensate for status line
+	local row = math.floor(((vim.o.lines - 3) - height) / 2)
 	local col = math.floor((vim.o.columns - width) / 2)
-
-	-- local background = vim.api.nvim_create_buf(true, false)
-	-- vim.api.nvim_set_current_buf(background)
-
-	-- vim.bo[background].bufhidden = 'wipe'
-	-- vim.bo[background].buftype = 'nofile'
-	-- vim.bo[background].modifiable = false
-	-- vim.bo[background].filetype = 'dashboard'
-
-	-- vim.wo.cursorline = false
-	-- vim.wo.number = false
-	-- vim.wo.relativenumber = false
-	-- vim.wo.signcolumn = 'no'
 
 	local buf = vim.api.nvim_create_buf(false, true)
 	local win = vim.api.nvim_open_win(buf, true, {
@@ -56,8 +62,9 @@ local function startScreen()
 		border = 'rounded'
 	})
 
-	vim.api.nvim_buf_set_lines(buf, 0 , -1, false, header)
+	vim.api.nvim_buf_set_lines(buf, 0 , -1, false, Splash)
 	vim.api.nvim_set_current_buf(buf)
+	vim.api.nvim_win_set_cursor(0, { CursorLine, 15})
 
 	vim.bo[buf].bufhidden = 'wipe'
 	vim.bo[buf].buftype = 'nofile'
@@ -69,17 +76,22 @@ local function startScreen()
 	vim.wo[win].relativenumber = false
 	vim.wo[win].signcolumn = 'no'
 
-	vim.cmd('call cursor(20, 16)')
-
 	local opts = { noremap = true, silent = true, buffer = buf }
 	vim.keymap.set('n', 'q', ':qa<CR>', opts)
 	vim.keymap.set('n', 'e', function()
 		FullscreenFzf(true) end, opts)
-	vim.keymap.set('n', 'n', ':q<CR>', opts)
-	vim.keymap.set('n', ':', function()
-		vim.cmd('q')
-		vim.api.nvim_feedkeys(':', 'n', false)
-	end, opts)
+
+	Dash_bind = vim.api.nvim_create_namespace("dash")
+
+	vim.on_key(function(key)
+		-- handle auto-inserted non-ASCII chars (more testing needed)
+		if key:byte(1) > 127 then
+			return
+		end
+
+		vim.api.nvim_win_close(win, false) end,
+		Dash_bind
+	)
 
 	return win
 end
@@ -93,6 +105,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 				desc = '[STARTSCREEN] Hide when unfocused',
 				once = true,
 				callback = function()
+					vim.on_key(nil, Dash_bind)
 					vim.api.nvim_win_close(Dash, true)
 				end
 				})

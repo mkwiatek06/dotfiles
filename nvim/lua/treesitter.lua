@@ -48,8 +48,8 @@ end
 
 vim.cmd('echo "TreeSitter Deactivated!"')
 
-vim.bo.smartindent = true
-vim.bo.cindent = true
-vim.bo.autoindent = true
+vim.bo.smartindent = false
+vim.bo.cindent = false
+vim.bo.autoindent = false
 
 -- vim.bo.indentexpr = "v:lua.TSIndentExpr()"
