@@ -1,0 +1,18 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=/tmp/x4sh3n-zsh-histfile
+HISTSIZE=1000
+SAVEHIST=10000
+setopt extendedglob nomatch notify
+unsetopt autocd beep
+bindkey -v
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/x4sh3n/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+eval $(dircolors ~/.dir_colors)
+PS1="%n@%m %F{#5500ff}%2~%f > "
+alias ls="ls -FAh --color=auto --sort=version --group-directories-first"
+alias lsd="ls -hAlF --color=auto --sort=version --group-directories-first"

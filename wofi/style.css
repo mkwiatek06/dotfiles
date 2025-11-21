@@ -1,0 +1,25 @@
+#window {
+	background-color: black;
+	color: white;
+	border-color: white;
+}
+
+#input {
+	background-color: black;
+	color: white;
+	border-color: #5500ff;
+}
+
+#input:focus {
+	box-shadow: #5500ff 0px 0px 10px 2px;
+}
+
+#entry:selected {
+	background-color: white;
+	color: black;
+}
+
+#text:selected {
+	background-color: white;
+	color: black;
+}

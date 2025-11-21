@@ -2,7 +2,6 @@
 
 @define-color highlight #5500ff;
 @define-color border rgba(255, 255, 255, 0.05);
-/* equivalent to rgb(28, 28, 28); | calculated by AI :3 */
 @define-color border-dark rgba(255, 255, 255, 0.05);
 @define-color border-highlight rgba(85, 0, 255, 0.1);
 
@@ -16,32 +15,28 @@
 }
 
 window#waybar {
-    background-color: black;
-    border: 2px solid @border-highlight;
+    background-color: transparent;
+    border: none;
     color: #ffffff;
     transition-property: background-color;
     transition-duration: .5s;
-    border-radius: 10px;
+    border-radius: 0px;
     /* margin: 55px; this is set in the config.jsonc */
-    /* padding-bottom: 55px; */
-    /* padding-left: 15px; */
-    /* padding-right: 15px; */
 }
 
-/* window#waybar.empty { */
-/*     border-bottom: none; */
-/* } */
+window#waybar.empty {
+    border-bottom: none;
+}
 
-/* window#waybar.solo { */
-    /* border-radius: 0; */
-    /* background-color: #000000; */
-    /* border-bottom: 2px solid @border; */
-    /* box-shadow: 0px -1px 2px black inset; match hyprland shadow around semi-transparent borders */
-
-/* } */
+window#waybar.solo {
+    border-radius: 0;
+    background-color: #000000;
+    border-bottom: 2px solid @border;
+    box-shadow: 0px -1px 2px black inset; /* match hyprland shadow around semi-transparent borders */
+}
 
 window#waybar #window {
-    color: transparent; /* aryan version of visibility: hidden */
+    color: transparent; /* better version of visibility: hidden */
 }
 
 tooltip {
@@ -159,28 +154,37 @@ button:hover {
     padding-left: 15px;
     margin-right: 0;
     margin-left: 0;
-    margin-top: 0;
+    margin-top: 5px;
     /* border-right: 1px solid @border-dark; */
     /* border-left: 1px solid @border-dark; */
-    border-radius: 0;
+    border-radius: 7px;
     color: #ffffff;
-    background: transparent;
+    background-color: black;
     /* color stack fix | must be set to border width */
     margin-bottom: 0px;
 }
 
 #window,
 #workspaces {
-    margin: 0;
-    border-radius: 5px;
-    background-color: transparent;
+    margin-top: 5px;
+    border-radius: 7px;
+    background: black;
     font-family: Source Han Sans JP;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
 .modules-left > widget:first-child > #workspaces {
     margin-left: 0;
+    /* border-radius: 70px; */
+    /* transform:rotateZ(90deg); */
+    /* border-top-left-radius: 7px; */
+    /* boder-bottom-left-radius: 7px; */
+
 }
+
+/* #modules-left { */
+/* 	border-radius: 7px; */
+/* } */
 
 /* If workspaces is the rightmost module, omit right margin */
 .modules-right > widget:last-child > #workspaces {
@@ -251,9 +255,9 @@ label:focus {
     background-color: transparent;
 }
 
-#disk {
-    background-color: #964B00;
-}
+/* #disk { */
+    /* background-color: #964B00; */
+/* } */
 
 #backlight {
     background-color: #90b1b1;
@@ -306,7 +310,7 @@ label:focus {
 }
 
 #temperature {
-    background-color: transparent;
+    /* background-color: transparent; */
     color: white;
     /* margin: 10px;   */
 }
@@ -316,7 +320,7 @@ label:focus {
 }
 
 #tray {
-    background-color: transparent;
+    /* background-color: transparent; */
     border-left: none;
 }
 

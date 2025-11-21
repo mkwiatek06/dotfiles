@@ -6,9 +6,9 @@
     // "width": 1280, // Waybar width
     "spacing": 0, // Gaps between modules (4px)
     // Choose the order of the modules
-    "margin-top": 7,
-    "margin-left": 7,
-    "margin-right": 7,
+    "margin-top": 0,
+    "margin-left": 0,
+    "margin-right": 0,
     "modules-left": [
 	// "custom/media",
 	// "mpd",
