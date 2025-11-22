@@ -46,7 +46,7 @@ end
 return vim.fn.indent(vim.fn.prevonblank(row))
 end
 
-vim.cmd('echo "TreeSitter Deactivated!"')
+-- vim.cmd('echo "TreeSitter Deactivated!"')
 
 vim.bo.smartindent = false
 vim.bo.cindent = false

@@ -1,3 +1,37 @@
+eval $(dircolors ~/.dir_colors)
+alias ls="ls -FAh --color=auto --sort=version --group-directories-first"
+alias lsd="ls -hAlF --color=auto --sort=version --group-directories-first"
+alias vim="nvim"
+alias vi="nvim"
+alias nv="nvim"
+alias cls="clear"
+# echo -ne "\e[3 q"
+export EDITOR="nvim"
+export VISUAL="nvim"
+# NoSplash is a custom command.
+export PAGER="nvim -R +NoSplash"
+export MANPAGER="nvim +NoSplash +Man!"
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+
+autoload -Uz vcs_info
+precmd() { vcs_info }
+setopt prompt_subst
+zstyle ':vcs_info:git:*' formats '%r:%b'
+zstyle ':vcs_info:git:*' actionformats '%r:%b'
+
+display_host() {
+	local maxpathlen=14
+	local gitinfo="${vcs_info_msg_0_:-%2~}"
+	if (( ${#gitinfo} < maxpathlen )); then
+		echo "%n@%m "
+	fi
+}
+PS1='$(display_host)%F{#5500ff}${vcs_info_msg_0_:-%2~}%f > '
+
 # Lines configured by zsh-newuser-install
 HISTFILE=/tmp/x4sh3n-zsh-histfile
 HISTSIZE=1000
@@ -6,13 +40,25 @@ setopt extendedglob nomatch notify
 unsetopt autocd beep
 bindkey -v
 # End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-zstyle :compinstall filename '/home/x4sh3n/.zshrc'
 
+# The following lines were added by compinstall
+zstyle ':completion:*' completer _complete _ignored _correct _approximate
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
+zstyle ':completion:*' max-errors 1
+zstyle ':completion:*' menu select=1
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle :compinstall filename '/home/x4sh3n/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
-eval $(dircolors ~/.dir_colors)
-PS1="%n@%m %F{#5500ff}%2~%f > "
-alias ls="ls -FAh --color=auto --sort=version --group-directories-first"
-alias lsd="ls -hAlF --color=auto --sort=version --group-directories-first"
+
+if command -v tmux >/dev/null 2>&1 && [ -z "$TMUX" ]; then
+	# local last_session=$(tmux list-sessions -F '#S' 2>/dev/null | tail -n1)
+	# if [ -n "$last_session" ]; then
+		# exec tmux attach-session -t "$last_session"
+	# else
+		exec tmux new-session
+	# fi
+fi

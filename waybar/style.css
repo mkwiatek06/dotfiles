@@ -37,6 +37,7 @@ window#waybar.solo {
 
 window#waybar #window {
     color: transparent; /* better version of visibility: hidden */
+    background-color: transparent;
 }
 
 tooltip {
@@ -159,7 +160,7 @@ button:hover {
     /* border-left: 1px solid @border-dark; */
     border-radius: 7px;
     color: #ffffff;
-    background-color: black;
+    background-color: transparent;
     /* color stack fix | must be set to border width */
     margin-bottom: 0px;
 }

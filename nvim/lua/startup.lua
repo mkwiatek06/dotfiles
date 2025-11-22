@@ -1,3 +1,9 @@
+vim.api.nvim_create_user_command("NoSplash", function()
+	No_Splash = true
+end, {
+	nargs = 0
+})
+
 local function startScreen()
 	local splash = {
 		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
@@ -98,7 +104,9 @@ end
 
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
-		if vim.fn.argc() == 0 then -- If no files open
+		if No_Splash then
+			return
+		elseif vim.fn.argc() == 0 then -- If no files open
 			Dash = startScreen()
 			if Dash then
 				vim.api.nvim_create_autocmd('WinLeave', {
