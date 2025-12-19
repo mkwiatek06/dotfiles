@@ -17,3 +17,4 @@ vim.cmd[[highlight Search guibg=#8144fc guifg=#000000]]
 -- vim.api.nvim_set_hl(0, 'Normal', { fg = '#FFFFFF', bg = '#000000', bold = true })
 vim.api.nvim_set_hl(0, 'SLIndentLinux', { fg = '#002B6C', bg = '#FFFFFF', bold = true })
 vim.api.nvim_set_hl(0, 'Separator', { fg = '#002B6C', bg = '#002B6C' })
+-- vim.api.nvim_set_hl(0, 'Yank', { bg = NvimDarkGrey })

@@ -26,11 +26,19 @@ function Compile(compiler_param, tmp)
 	end
 
 	if tmp then
-		compiler_param['output'] = TempDir .. vim.fn.expand("%:t:r")
+		if compiler_param['output_is_dir'] then
+			compiler_param['output'] = TempDir
+		else
+			compiler_param['output'] = TempDir .. vim.fn.expand("%:t:r")
+		end
 	else
 		local dir = vim.fn.expand("%:p:h") .. "/bin/"
 		if vim.fn.isdirectory(dir) then
-			compiler_param['output'] = dir .. vim.fn.expand("%:t:r")
+			if compiler_param['output_is_dir'] then
+				compiler_param['output'] = dir
+			else
+				compiler_param['output'] = dir .. vim.fn.expand("%:t:r")
+			end
 		else
 			vim.notify("Compilation Failed - No bin folder.", vim.log.levels.WARN)
 			return
@@ -58,8 +66,18 @@ function Compile(compiler_param, tmp)
 		return
 	end
 
+	if compiler_param['output_is_dir'] then
+		compiler_param['output'] = compiler_param['output'] .. vim.fn.expand("%:t:r")
+	end
+
 	if OS == "Linux" then
 		vim.fn.system("chmod +x " .. compiler_param.output)
 	end
-	vim.cmd("botright " .. CompilerWinSize .. "sp term://" .. compiler_param.output)
+
+	if compiler_param['runner'] then
+		print(compiler_param.output)
+		vim.cmd("botright " .. CompilerWinSize .. "sp term://" .. compiler_param['runner'] .. " ".. compiler_param['output'])
+	else
+		vim.cmd("botright " .. CompilerWinSize .. "sp term://" .. compiler_param.output)
+	end
 end

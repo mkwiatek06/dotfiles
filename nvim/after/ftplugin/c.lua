@@ -5,9 +5,9 @@ local compiler = {
 }
 
 vim.keymap.set('n', '<leader>cc', function()
-    Compile(compiler, false)
+    Compile(compiler, true)
 end, { buffer = true, desc = "Compile C in tmpdir" })
 
 vim.keymap.set('n', '<leader>cw', function()
-    Compile(compiler, true)
+    Compile(compiler, false)
 end, { buffer = true, desc = "Compile C in ./bin/" })
