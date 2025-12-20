@@ -1,1 +1,17 @@
+theme = "dark_violet"
+
+[editor]
+line-number = "relative"
+middle-click-paste = false
+cursorline = true
+
+[editor.cursor-shape]
+normal = "block"
+insert = "bar"
+select = "block"
+
+[editor.file-picker]
+hidden = false
+
+[editor.inline-diagnostics]
 
