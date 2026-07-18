@@ -1,0 +1,9 @@
+default-timeout=5000
+ignore-timeout=1
+anchor=top-right
+background-color=#000000C0
+text-color=#FFFFFF
+border-color=#5500FF
+border-radius=8
+icon-border-radius=8
+progress-color=source #FFFFFF

@@ -44,7 +44,7 @@ tabstop = { modifiers = ["italic"], bg = "bossanova" }
 # TODO: differentiate doc comment
 # concat (ERROR) @error.syntax and "MISSING ;" selectors for errors
 
-"ui.background" = { bg = "midnight" }
+"ui.background" = { bg = "black" }
 "ui.background.separator" = { fg = "comet" }
 "ui.linenr" = { fg = "comet" }
 "ui.linenr.selected" = { fg = "lilac" }
@@ -95,6 +95,7 @@ hint = "silver"
 
 [palette]
 white = "#ffffff"
+black = "#000000"
 lilac = "#dbbfef"
 lavender = "#a4a0e8"
 comet = "#5a5977"

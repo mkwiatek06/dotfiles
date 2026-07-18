@@ -1,16 +1,20 @@
+
 eval $(dircolors ~/.dir_colors)
 alias ls="ls -FAh --color=auto --sort=version --group-directories-first"
 alias lsd="ls -hAlF --color=auto --sort=version --group-directories-first"
 alias vim="nvim"
 alias vi="nvim"
 alias nv="nvim"
+alias vp="nvim -R +NoSplash"
+alias hx="helix"
 alias cls="clear"
 # echo -ne "\e[3 q"
-export EDITOR="nvim"
-export VISUAL="nvim"
+export EDITOR="helix"
+export VISUAL="helix"
 # NoSplash is a custom command.
-export PAGER="nvim -R +NoSplash"
-export MANPAGER="nvim +NoSplash +Man!"
+export PAGER="delta"
+export MANPAGER="delta"
+export PATH="$HOME/.cargo/bin:$PATH"
 setopt APPEND_HISTORY
 setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
@@ -23,14 +27,24 @@ setopt prompt_subst
 zstyle ':vcs_info:git:*' formats '%r:%b'
 zstyle ':vcs_info:git:*' actionformats '%r:%b'
 
-display_host() {
-	local maxpathlen=14
-	local gitinfo="${vcs_info_msg_0_:-%2~}"
-	if (( ${#gitinfo} < maxpathlen )); then
-		echo "%n@%m "
+# display_host() {
+# 	local maxpathlen=14
+# 	local gitinfo="${vcs_info_msg_0_:-%2~}"
+# 	if (( ${#gitinfo} < maxpathlen )); then
+# 		echo "%n@%m "
+# 	fi
+# }
+
+host_or_git() {
+	local gitinfo="${vcs_info_msg_0_:-}"
+	if (( ${#gitinfo} > 0 )); then
+		echo "${vcs_info_msg_0_:-}"
+	else
+		echo "%n@%m"
 	fi
 }
-PS1='$(display_host)%F{#5500ff}${vcs_info_msg_0_:-%2~}%f > '
+
+PS1='$(host_or_git) %F{#5500ff}%2~%f > '
 
 # Lines configured by zsh-newuser-install
 HISTFILE=/tmp/x4sh3n-zsh-histfile
@@ -41,24 +55,27 @@ unsetopt autocd beep
 bindkey -v
 # End of lines configured by zsh-newuser-install
 
+
 # The following lines were added by compinstall
+
 zstyle ':completion:*' completer _complete _ignored _correct _approximate
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 zstyle ':completion:*' max-errors 1
 zstyle ':completion:*' menu select=1
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle :compinstall filename '/home/x4sh3n/.zshrc'
+
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-if command -v tmux >/dev/null 2>&1 && [ -z "$TMUX" ]; then
+# if command -v tmux >/dev/null 2>&1 && [ -z "$TMUX" ]; then
 	# local last_session=$(tmux list-sessions -F '#S' 2>/dev/null | tail -n1)
 	# if [ -n "$last_session" ]; then
 		# exec tmux attach-session -t "$last_session"
 	# else
-		exec tmux new-session
+		# exec tmux new-session
 	# fi
-fi
+# fi

@@ -1,0 +1,25 @@
+
+				// 		Text {
+				// 			id: clock
+				// 			color: "#FFFFFF"
+				// 			font.pixelSize: 18
+
+
+				// 			Process {
+				// 				id: dateProc
+
+				// 				command: ["date", "+%H%n%M"]
+				// 				running: true
+
+				// 				stdout: StdioCollector {
+				// 					onStreamFinished: clock.text = this.text
+				// 				}
+				// 			}
+
+				// 			Timer {
+				// 				interval: 1000
+				// 				running: true
+				// 				repeat: true
+				// 				onTriggered: dateProc.running = true
+				// 			}
+				// 		}

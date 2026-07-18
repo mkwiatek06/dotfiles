@@ -3,8 +3,8 @@ vim.o.expandtab = false -- true: use spaces | false: use the <tab> character
 vim.o.autoindent = false
 vim.o.smartindent = false
 vim.o.cindent = false
-vim.o.smarttab = true
-vim.o.tabstop = 8
+vim.o.smarttab = false
+vim.o.tabstop = 4
 vim.o.softtabstop = 4
 -- vim.o.shiftwidth = 8 -- undefine to always use 1 tab per indent
 
