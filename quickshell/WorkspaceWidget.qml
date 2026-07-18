@@ -13,9 +13,10 @@ ColumnLayout {
 			property var ws: modelData
 			property bool isActive: Hyprland.focusedWorkspace?.id === ws.id
 
-			text: symbols[ws.id - 1]
+			visible: ws.id > 0 ? true : false
+			text: symbols[ws.id - 1] ?? ""
 			color: isActive ? "#ED0BFF" : (ws ? "#FFFFFF" : "#dddddd")
-			font.pixelSize: 18
+			font.pixelSize: 20
 			anchors.topMargin: 3
 			anchors.bottomMargin: 3
 

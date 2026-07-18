@@ -10,7 +10,7 @@ import QtQuick.Effects
 
 Scope {
 		PanelWindow {
-			implicitWidth: 55
+			implicitWidth: 50
 			color: "#000000"		
 			anchors {
 				left: true
@@ -30,15 +30,25 @@ Scope {
 					}
 
 					
-					Network {}
+					Network {
+						Layout.alignment: Qt.AlignHCenter
+					}
+
+					BootInfo {
+						Layout.alignment: Qt.AlignHCenter
+					}
 
 					Item { Layout.fillHeight: true }
 
-					WorkspaceWidget {}
+					WorkspaceWidget {
+						Layout.alignment: Qt.AlignHCenter
+					}
 
 					Item { Layout.fillHeight: true }
 
-					ClockWidget {}
+					ClockWidget {
+						Layout.alignment: Qt.AlignHCenter
+					}
 
 				}
 		}
