@@ -1,17 +1,26 @@
 #window {
-	background-color: black;
+	background-color: transparent;
 	color: white;
 	border-color: white;
+	font-family: Iosevka Curly;
+	font-size: 22px;
 }
 
 #input {
 	background-color: black;
 	color: white;
 	border-color: #5500ff;
+	border-radius: 0;
+	padding: 3px;
 }
 
 #input:focus {
 	box-shadow: #5500ff 0px 0px 10px 2px;
+}
+
+#entry {
+	padding: 3px;
+	background-color: black;
 }
 
 #entry:selected {

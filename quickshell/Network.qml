@@ -6,6 +6,7 @@ import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
+import "Config" as Config
 
 Text {
 	
@@ -32,7 +33,7 @@ Text {
 		repeat: true
 
 		onTriggered: {
-			console.log(defDev)
+			// console.log(defDev)
 			if(getRoute.running === false && getState.running === false) {
 				getRoute.running = true
 			}
@@ -47,7 +48,7 @@ Text {
 		onStreamFinished: {
 				let obj = JSON.parse(this.text)
 				if(obj[0]?.dev !== undefined) {
-					console.log(obj[0].dev)
+					// console.log(obj[0].dev)
 					defDevState = qMLCantDoEnums.connected
 					defDev = obj[0].dev
 				} else {
@@ -65,12 +66,12 @@ Text {
 		running: false
 		stdout: StdioCollector {
 			onStreamFinished: {
-				console.log(this.text)
+				// console.log(this.text)
 				if(this.text === "") {
 					defDevState = qMLCantDoEnums.noHW
 				} else {
 					let obj = JSON.parse(this.text)
-					console.log(obj[0].operstate)
+					// console.log(obj[0].operstate)
 					if(obj[0].operstate === "UP") {
 						defDevState = qMLCantDoEnums.ifUp
 					} else {
@@ -87,7 +88,7 @@ Text {
 		stdout: StdioCollector {
 			onStreamFinished: {
 				let obj = JSON.parse(this.text)
-				console.log(obj[0].operstate)
+				// console.log(obj[0].operstate)
 				if(obj[0].operstate === "UP") {
 					defDevState = qMLCantDoEnums.ifUp
 				} else {
@@ -102,7 +103,8 @@ Text {
 		   defDevState === qMLCantDoEnums.ifDown ? "LDWN" :
 		   defDevState === qMLCantDoEnums.noHW ? "NoHW" :
 		   "UKWN"
-	color: defDevState === qMLCantDoEnums.connected ? "#0000FF" :
+	color: Config.Theme.darkMode === false ? "#FFFFFF" :
+		   defDevState === qMLCantDoEnums.connected ? "#0000FF" :
 		   defDevState === qMLCantDoEnums.ifUp ? "#00FF00" :
 		   defDevState === qMLCantDoEnums.ifDown ? "#FF0000" :
 		   defDevState === qMLCantDoEnums.noHW ? "#A1A1A1" :
