@@ -33,7 +33,6 @@ Text {
 		repeat: true
 
 		onTriggered: {
-			// console.log(defDev)
 			if(getRoute.running === false && getState.running === false) {
 				getRoute.running = true
 			}
@@ -46,9 +45,14 @@ Text {
 		command: [ "ip", "-j", "route", "show", "default" ]
 		stdout: StdioCollector {
 		onStreamFinished: {
+				if(this.text === "") {
+					if(defDev !== "") {
+						getState.command = ["ip", "-j", "link", "show", defDev]
+						getState.running = true
+					}
+				}
 				let obj = JSON.parse(this.text)
 				if(obj[0]?.dev !== undefined) {
-					// console.log(obj[0].dev)
 					defDevState = qMLCantDoEnums.connected
 					defDev = obj[0].dev
 				} else {
@@ -66,12 +70,10 @@ Text {
 		running: false
 		stdout: StdioCollector {
 			onStreamFinished: {
-				// console.log(this.text)
 				if(this.text === "") {
 					defDevState = qMLCantDoEnums.noHW
 				} else {
 					let obj = JSON.parse(this.text)
-					// console.log(obj[0].operstate)
 					if(obj[0].operstate === "UP") {
 						defDevState = qMLCantDoEnums.ifUp
 					} else {
@@ -88,7 +90,6 @@ Text {
 		stdout: StdioCollector {
 			onStreamFinished: {
 				let obj = JSON.parse(this.text)
-				// console.log(obj[0].operstate)
 				if(obj[0].operstate === "UP") {
 					defDevState = qMLCantDoEnums.ifUp
 				} else {
@@ -98,20 +99,27 @@ Text {
 		}
 	}
 
-	text:  defDevState === qMLCantDoEnums.connected ? "CONN" :
+	text:  !Config.Theme.darkMode ?
+		   		defDevState === qMLCantDoEnums.connected ? "󰤨" :
+			    defDevState === qMLCantDoEnums.connected ? "CONN" :
+			    defDevState === qMLCantDoEnums.ifUp ? "OPER" :
+			    defDevState === qMLCantDoEnums.ifDown ? "LDWN" :
+			    defDevState === qMLCantDoEnums.noHW ? "NoHW" :
+			    "UKWN" :
+		   defDevState === qMLCantDoEnums.connected ? "CONN" :
 		   defDevState === qMLCantDoEnums.ifUp ? "OPER" :
 		   defDevState === qMLCantDoEnums.ifDown ? "LDWN" :
 		   defDevState === qMLCantDoEnums.noHW ? "NoHW" :
 		   "UKWN"
 	color: Config.Theme.darkMode === false ? "#FFFFFF" :
-		   defDevState === qMLCantDoEnums.connected ? "#0000FF" :
+		   defDevState === qMLCantDoEnums.connected ? "#ED0BFF" :
 		   defDevState === qMLCantDoEnums.ifUp ? "#00FF00" :
 		   defDevState === qMLCantDoEnums.ifDown ? "#FF0000" :
 		   defDevState === qMLCantDoEnums.noHW ? "#A1A1A1" :
 		   "#444444"
 		   
-	font.pixelSize: 18
-	font.family: "Iosevka Curly"
+	font.pixelSize: Config.Theme.darkMode ? 18 : 30
+	font.family: Config.Theme.darkMode ? "Iosevka Curly" : "Terminess Nerd Font Mono"
 	anchors.topMargin: 3
 	anchors.bottomMargin: 3
 }

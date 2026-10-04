@@ -6,25 +6,34 @@ import Quickshell.Io
 
 ColumnLayout {
     id: root
-    property string kernel: "unkwn"
-    property string bootMode: "unkwn"
-    property string sysdStat: "unkwn"
-    property bool vulnerable: false
+    property list<string> pacman
+    property list<string> aur
+    property list<string> devel
+    property int pacmanCount: 0
+    property int aurCount: 0
+    property int develCount: 0
+
+    
+    Process {
+        id: getPacman
+		running: true
+		command: [ "pacman", "-Qqn" ]
+		stdout: StdioCollector {
+		    onStreamFinished: {
+		        root.p
+		        if(head != 0) {
+    		        kernel = this.text.substring(0, head)
+    		    }
+		    }
+		}
+    }
+
+    // Text {
+    //     id: combined
+    //     text: "Updates:" + pacman + aur + devel
+    // }
 
 	Text {
-	    Process {
-            id: getKernel
-    		running: true
-    		command: [ "uname", "-r" ]
-    		stdout: StdioCollector {
-    		    onStreamFinished: {
-    		        let head = this.text.indexOf("-")
-    		        if(head != 0) {
-        		        kernel = this.text.substring(0, head)
-        		    }
-    		    }
-    		}
-	    }
         text: kernel
         color: "#FFFFFF"
         font.family: "Iosevka Curly"

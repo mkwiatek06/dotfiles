@@ -1,12 +1,15 @@
 
 eval $(dircolors ~/.dir_colors)
-alias ls="ls -FAh --color=auto --sort=version --group-directories-first"
-alias lsd="ls -hAlF --color=auto --sort=version --group-directories-first"
+# alias ls="ls -FAh --color=auto --sort=version --group-directories-first"
+# alias lsd="ls -hAlF --color=auto --sort=version --group-directories-first"
+alias ls="lsd"
+alias find="fd"
 alias vim="nvim"
 alias vi="nvim"
 alias nv="nvim"
 alias vp="nvim -R +NoSplash"
 alias hx="helix"
+alias calc="qalc"
 alias cls="clear"
 # echo -ne "\e[3 q"
 export EDITOR="helix"

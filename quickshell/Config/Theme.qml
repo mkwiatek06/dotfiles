@@ -2,5 +2,6 @@ pragma Singleton
 import QtQuick
 
 QtObject {
-    property bool darkMode: false
+    // Theme switch. DarkThemeSwitcher overrides this.
+    property bool darkMode: true
 }
